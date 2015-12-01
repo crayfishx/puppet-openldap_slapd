@@ -64,12 +64,21 @@ class openldap_slapd (
   $sec_allow                   = $openldap_slapd::params::sec_allow,
   $sec_require                 = $openldap_slapd::params::sec_require,
   $global_acls                 = $openldap_slapd::params::global_acls,
+  $databases                   = {},
+  $schemas                     = {},
+  $authz                       = {},
+  $modules                     = [],
 ) inherits openldap_slapd::params {
 
+  package { 'openldap_servers':
+    ensure => installed,
+  }
+
   concat { $conf_file:
-    owner => 'root',
-    group => 'root',
-    mode  => '0644',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['openldap-servers'],
   }
 
   # Concat fragments order
@@ -107,6 +116,10 @@ class openldap_slapd (
     }
   }
 
-  create_resources('openldap_slapd::acl', $global_acls)
+  openldap_slapd::module { $modules: }
 
+  create_resources('openldap_slapd::acl', $global_acls)
+  create_resources('openldap_slapd::schema', $schemas)
+  create_resources('openldap_slapd::authz', $authz)
+  
 }
