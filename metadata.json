@@ -1,0 +1,15 @@
+{
+  "name": "crayfishx-openldap_slapd",
+  "version": "0.1.0",
+  "author": "crayfishx",
+  "summary": "Manage openldap using slapd.conf",
+  "license": "Apache-2.0",
+  "source": "https://github.com/crayfishx/puppet-openldap_slapd",
+  "project_page": "https://github.com/crayfishx/puppet-openldap_slapd",
+  "issues_url": "https://github.com/crayfishx/puppet-openldap_slapd/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs-concat","version_requirement":"1.x"}
+  ]
+}
+

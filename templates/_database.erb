@@ -1,0 +1,100 @@
+## Database: <%= @name %>
+#
+
+database <%= @name %>
+
+<% if @rootpw -%>
+rootpw <%= @rootpw %>
+<% end %>
+<%if @suffix%>
+suffix <%= @suffix %>
+<% end-%>
+<%if @rootdn%>
+rootdn <%= @rootdn %>
+<% end-%>
+<%if @directory%>
+directory <%= @directory %>
+<% end-%>
+<%if @mode%>
+mode <%= @mode %>
+<% end-%>
+<%if @monitoring%>
+monitoring <%= @monitoring %>
+<% end-%>
+<%if @add_content_acl%>
+add_content_acl <%= @add_content_acl %>
+<% end-%>
+<%if @dbnosync%>
+dbnosync
+<% end-%>
+<%if @checkpoint%>
+checkpoint <%= @checkpoint %>
+<% end-%>
+<%if @maxsize%>
+maxsize <%= @maxsize %>
+<% end-%>
+
+
+<% unless @indexes.empty? -%># Indexes <% end -%>
+<% @indexes.each do |i| -%>
+index <%= i %>
+<% end -%>
+
+<% unless @overlays.empty? -%>
+# Overlays
+
+<% @overlays.each do |o,methods| -%>
+overlay <%= o %>
+<% methods.each do |m| -%>
+<%= m %>
+<%
+end
+end
+end
+-%>
+
+
+<% unless @syncrepl.empty? -%>
+syncrepl rid=<%= @syncrepl['rid'] %>
+
+<%
+[
+  'provider',
+  'type',
+  'interval',
+  'retry',
+  'searchbase',
+  'filter',
+  'scope',
+  'attrs',
+  'attrsonly',
+  'sizelimit',
+  'timelimit',
+  'schemachecking',
+  'bindmethod',
+  'binddn',
+  'saslmech',
+  'authcid',
+  'authzid',
+  'credentials',
+  'realm',
+  'secprops',
+  'starttls',
+  'tls_cert',
+  'tls_key',
+  'tls_cacert',
+  'tls_cacertdir',
+  'tls_reqcert',
+  'tls_ciphersuite',
+  'tls_crlcheck',
+  'logbase',
+  'logfilter',
+  'syncdata',
+].each do |d|
+if @syncrepl[d] -%>
+  <%= d %> <%= @syncrepl[d] %>
+<%
+end
+end
+end
+-%>
