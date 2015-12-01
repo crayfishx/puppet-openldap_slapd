@@ -70,7 +70,7 @@ class openldap_slapd (
   $modules                     = [],
 ) inherits openldap_slapd::params {
 
-  package { 'openldap_servers':
+  package { 'openldap-servers':
     ensure => installed,
   }
 
