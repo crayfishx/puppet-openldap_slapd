@@ -70,8 +70,13 @@ class openldap_slapd (
   $modules                     = [],
 ) inherits openldap_slapd::params {
 
-  package { 'openldap_servers':
+  package { 'openldap-servers':
     ensure => installed,
+  }
+
+  file { '/etc/sysconfig/slapd':
+    ensure => file,
+    source => 'puppet:///modules/openldap_slapd/slapd',
   }
 
   concat { $conf_file:
@@ -109,7 +114,7 @@ class openldap_slapd (
     content => template('openldap_slapd/_security.erb')
   }
 
-  if $tls_enabled {
+  if $tls_enabled == true {
     concat::fragment { 'openldap_slapd::tls':
       order   => '30',
       content => template('openldap_slapd/_tls.erb')
@@ -118,6 +123,7 @@ class openldap_slapd (
 
   openldap_slapd::module { $modules: }
 
+  create_resources('openldap_slapd::database', $databases)
   create_resources('openldap_slapd::acl', $global_acls)
   create_resources('openldap_slapd::schema', $schemas)
   create_resources('openldap_slapd::authz', $authz)

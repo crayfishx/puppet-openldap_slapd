@@ -1,15 +1,15 @@
 class openldap_slapd::params {
 
 
-  $conf_file = '/etc/openldap/slapd.conf'
+  $conf_file  = '/etc/openldap/slapd.conf'
   $schema_dir = '/etc/openldap/schema'
 
   ## Global settings
 
-  $server_id = '01'
-  $threads   = '04'
-  $pidfile   = '/var/run/openldap/slapd.pid'
-  $argsfile  = '/var/run/openldap/slapd.args'
+  $server_id   = '01'
+  $threads     = '04'
+  $pidfile     = '/var/run/openldap/slapd.pid'
+  $argsfile    = '/var/run/openldap/slapd.args'
   $log_level   = 'stats'
   $tls_enabled = true
 
@@ -22,9 +22,9 @@ class openldap_slapd::params {
   $tls_dh_param_file       = '/etc/openldap/ssl.key/dhparam'
   $password_hash           = '{CRYPT}'
   $password_salt_format    = '$6$%.12s'
-  $sec_disallow                =  'bind_anon'
-  $sec_allow                   =  ''
-  $sec_require                 =  'bind LDAPv3 strong'
+  $sec_disallow            = 'bind_anon'
+  $sec_allow               = ''
+  $sec_require             = undef
   $security                = 'ssf=1 update_ssf=112 simple_bind=64'
   $local_ssf               = '256'
   
