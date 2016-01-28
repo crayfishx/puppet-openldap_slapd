@@ -92,9 +92,13 @@ syncrepl rid=<%= @syncrepl['rid'] %>
   'syncdata',
 ].each do |d|
 if @syncrepl[d] -%>
-  <%= d %> <%= @syncrepl[d] %>
+  <%= d %>=<%= @syncrepl[d] %>
 <%
 end
+end-%>
+<%if @maxsize%>
+mirrormode <%= @mirrormode %>
+<% 
 end
 end
 -%>
