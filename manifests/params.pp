@@ -36,7 +36,7 @@ class openldap_slapd::params {
       ],
     },
 
-    'db.base="cn=Subschema"' => {
+    'dn.base="cn=Subschema"' => {
       rules       => [
         { 'by'    => '*', 'action' => 'read' },
       ],
