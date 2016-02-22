@@ -40,11 +40,6 @@ class openldap_slapd::params {
       rules       => [
         { 'by'    => '*', 'action' => 'read' },
       ],
-    } 
+    }
   }
-
-
-
 }
-
-
