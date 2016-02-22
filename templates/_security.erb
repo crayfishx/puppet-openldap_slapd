@@ -11,15 +11,14 @@ password-crypt-salt-format "<%= @password_salt_format %>"
 # Security requirements
 #---------------------------------------------------------------------------
 
-<% if @sec_disallow %>disallow <%= @sec_disallow %> <% end %>
-<% if @sec_require %>require <%= @sec_require %> <% end %>
-<% if @sec_allow %>allow <%= @sec_allow %> <% end %>
+<% if @sec_disallow %>disallow <%= @sec_disallow %><% end %>
+<% if @sec_require %>require <%= @sec_require %><% end %>
+<% if @sec_allow %>allow <%= @sec_allow %><% end %>
 
 <% if @local_ssf -%>
 # SSF value for ldapi://
 localSSF <%= @local_ssf %>
 <% end %>
-
 
 # minimum required SSF value (security strength factor)
 security <%= @security %>
