@@ -1,49 +1,47 @@
+
 ## Database: <%= @name %>
 #
 
-database <%= @name %>
+database <%= @backend -%>
 
-<%if @suffix%>
-suffix <%= @suffix %>
-<% end-%>
-<%if @rootdn%>
-rootdn <%= @rootdn %>
-<% end-%>
-<% if @rootpw -%>
-rootpw <%= @rootpw %>
-<% end %>
-<%if @directory%>
-directory <%= @directory %>
-<% end-%>
-<%if @mode%>
-mode <%= @mode %>
-<% end-%>
-<%if @monitoring%>
-monitoring <%= @monitoring %>
-<% end-%>
-<%if @add_content_acl%>
-add_content_acl <%= @add_content_acl %>
-<% end-%>
-<%if @dbnosync%>
-dbnosync
-<% end-%>
-<%if @checkpoint%>
-checkpoint <%= @checkpoint %>
-<% end-%>
-<%if @maxsize%>
-maxsize <%= @maxsize %>
-<% end-%>
-
-
-<% unless @indexes.empty? -%># Indexes <% end %>
-<% @indexes.each do |i| -%>
-index <%= i %>
+<%if @suffix -%>suffix <%= @suffix %>
 <% end -%>
-
-<% unless @overlays.empty? -%>
-# Overlays
-
-<% @overlays.each do |o,methods| -%>
+<%if @rootdn -%>rootdn <%= @rootdn %>
+<% end -%>
+<% if @rootpw -%>rootpw <%= @rootpw %>
+<% end -%>
+<%if @directory -%>directory <%= @directory %>
+<% end -%>
+<%if @lastmod -%>lastmod <%= @lastmod %>
+<% end -%>
+<%if @maxsize -%>maxsize <%= @maxsize %>
+<% end -%>
+<%if @mode -%>mode <%= @mode %>
+<% end -%>
+<%if @uri and @backend == 'ldap' -%>uri  <%= @uri %>
+<% end -%>
+<%if @monitoring -%>monitoring <%= @monitoring %>
+<% end -%>
+<%if @add_content_acl -%>add_content_acl <%= @add_content_acl %>
+<% end -%>
+<%if @dbnosync -%>dbnosync
+<% end -%>
+<%if @checkpoint -%>checkpoint <%= @checkpoint %>
+<% end -%>
+<%if @envflags and @backend == 'mdb' -%>envflags <%= @envflags %>
+<% end -%>
+<%if @sizelimit -%>sizelimit <%= @sizelimit %>
+<% end -%>
+<% unless @indexes.empty? %>
+# Indexes for <%= @name %>
+<% end %>
+<% @indexes.each do |i| -%>index <%= i %>
+<% end -%>
+<%if @limits -%>limits <%= @limits %>
+<% end -%>
+<% unless @overlays.empty? %>
+# Overlays for <%= @name %>
+<% @overlays.each do |o,methods| %>
 overlay <%= o %>
 <% methods.each do |m| -%>
 <%= m %>
@@ -52,9 +50,7 @@ end
 end
 end
 -%>
-
-
-<% unless @syncrepl.empty? -%>
+<% unless @syncrepl.empty? %>
 syncrepl rid=<%= @syncrepl['rid'] %>
 <%
 [
@@ -94,8 +90,8 @@ if @syncrepl[d] -%>
   <%= d %>=<%= @syncrepl[d] %>
 <%
 end
-end-%>
-<%if @mirrormode%>
+end %>
+<%if @mirrormode -%>
 mirrormode <%= @mirrormode %>
 <% 
 end

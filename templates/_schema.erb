@@ -1,1 +1,3 @@
-include <%= @directory %>/<%= @schemaname %>.schema
+<% @files.each do |schemaname| -%>
+include <%= @directory %>/<%= schemaname %>.schema
+<% end -%>
