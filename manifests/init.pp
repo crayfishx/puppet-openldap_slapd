@@ -43,31 +43,35 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class openldap_slapd (
-  $conf_file               = $openldap_slapd::params::conf_file,
-  $schema_dir              = $openldap_slapd::params::schema_dir,
-  $server_id               = $openldap_slapd::params::server_id,
-  $threads                 = $openldap_slapd::params::threads,
   $argsfile                = $openldap_slapd::params::argsfile,
-  $pidfile                 = $openldap_slapd::params::pidfile,
+  $authz_regexp            = {},
+  $conf_file               = $openldap_slapd::params::conf_file,
+  $databases               = {},
+  $global_acls             = $openldap_slapd::params::global_acls,
+  $local_ssf               = $openldap_slapd::params::local_ssf,
   $log_level               = $openldap_slapd::params::log_level,
-  $tls_enabled             = $openldap_slapd::params::tls_enabled,
-  $tls_protocol_min        = $openldap_slapd::params::tls_protocol_min,
-  $tls_cipher_suite        = $openldap_slapd::params::tls_cipher_suite,
-  $tls_certificate_file    = $openldap_slapd::params::tls_certificate_file,
-  $tls_key_file            = $openldap_slapd::params::tls_key_file,
-  $tls_ca_certificate_file = $openldap_slapd::params::tls_ca_certificate_file,
-  $tls_dh_param_file       = $openldap_slapd::params::tls_dh_param_file,
-  $passwod_hash            = $openldap_slapd::params::password_hash,
+  $modules                 = [],
+  $password_hash           = $openldap_slapd::params::password_hash,
   $password_salt_format    = $openldap_slapd::params::password_salt_format,
+  $pidfile                 = $openldap_slapd::params::pidfile,
+  $schema_dir              = $openldap_slapd::params::schema_dir,
+  $schemas                 = {},
+  $sec_allow               = $openldap_slapd::params::sec_allow,
+  $sec_disallow            = $openldap_slapd::params::sec_disallow,
+  $sec_require             = $openldap_slapd::params::sec_require,
   $security                = $openldap_slapd::params::security,
-  $sec_disallow                = $openldap_slapd::params::sec_disallow,
-  $sec_allow                   = $openldap_slapd::params::sec_allow,
-  $sec_require                 = $openldap_slapd::params::sec_require,
-  $global_acls                 = $openldap_slapd::params::global_acls,
-  $databases                   = {},
-  $schemas                     = {},
-  $authz                       = {},
-  $modules                     = [],
+  $server_id               = $openldap_slapd::params::server_id,
+  $sizelimit               = undef,
+  $threads                 = $openldap_slapd::params::threads,
+  $timelimit               = undef,
+  $tls_ca_certificate_file = $openldap_slapd::params::tls_ca_certificate_file,
+  $tls_ca_certificate_path = undef,
+  $tls_certificate_file    = $openldap_slapd::params::tls_certificate_file,
+  $tls_cipher_suite        = $openldap_slapd::params::tls_cipher_suite,
+  $tls_dh_param_file       = $openldap_slapd::params::tls_dh_param_file,
+  $tls_enabled             = $openldap_slapd::params::tls_enabled,
+  $tls_key_file            = $openldap_slapd::params::tls_key_file,
+  $tls_protocol_min        = $openldap_slapd::params::tls_protocol_min,
 ) inherits openldap_slapd::params {
 
   package { 'openldap-servers':
@@ -98,8 +102,6 @@ class openldap_slapd (
   # 70: Database (config)
   # 80: Database (custom)
 
-
-
   Concat::Fragment {
     target => $conf_file,
   }
@@ -124,8 +126,11 @@ class openldap_slapd (
   openldap_slapd::module { $modules: }
 
   create_resources('openldap_slapd::database', $databases)
-  create_resources('openldap_slapd::acl', $global_acls)
   create_resources('openldap_slapd::schema', $schemas)
-  create_resources('openldap_slapd::authz', $authz)
+  create_resources('openldap_slapd::authz', $authz_regexp)
+
+  if $global_acls {
+    create_resources('openldap_slapd::acl', $global_acls)
+  }
   
 }

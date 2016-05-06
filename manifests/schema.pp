@@ -1,15 +1,14 @@
 define openldap_slapd::schema (
-  $schemaname = $name,
+  $position   = 0,
+  $files      = [],
   $order      = '20',
-  $directory  = $::openldap_slapd::schema_dir,
+  $directory  = $name,
   $target     = $::openldap_slapd::conf_file,
 ) {
-
-
   concat::fragment { "openldap::schema::${name}":
     content => template('openldap_slapd/_schema.erb'),
     target  => $target,
-    order   => $order,
+    order   => "${order}_${position}",
   }
 }
 

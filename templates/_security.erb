@@ -1,26 +1,31 @@
-
+## Security requirements
+#
 
 password-hash <%= @password_hash %>
 <% if @password_salt_format -%>
-# Parameters for {CRYPT} scheme: SHA-512, 72 bits) of salt, 5000 iterations
-#
 password-crypt-salt-format "<%= @password_salt_format %>"
-<% end %>
+<% end -%>
 
-#---------------------------------------------------------------------------
-# Security requirements
-#---------------------------------------------------------------------------
-
-<% if @sec_disallow %>disallow <%= @sec_disallow %><% end %>
-<% if @sec_require %>require <%= @sec_require %><% end %>
-<% if @sec_allow %>allow <%= @sec_allow %><% end %>
+<% if @sec_require and ! @sec_require.empty? -%>
+<%- Array(@sec_require).each do |sec_require| -%>
+require <%= sec_require %>
+<%- end -%>
+<% end -%>
+<% if @sec_allow and ! @sec_allow.empty? -%>
+<%- Array(@sec_allow).each do |sec_allow| -%>
+allow <%= sec_allow %>
+<%- end -%>
+<% end -%>
 
 <% if @local_ssf -%>
 # SSF value for ldapi://
 localSSF <%= @local_ssf %>
-<% end %>
+<% end -%>
 
 # minimum required SSF value (security strength factor)
 security <%= @security %>
-
-#---------------------------------------------------------------------------
+<% if @sec_disallow and ! @sec_disallow.empty? -%>
+<%- Array(@sec_disallow).each do |sec_disallow| -%>
+disallow <%= sec_disallow %>
+<%- end -%>
+<% end -%>

@@ -1,15 +1,24 @@
 
-
-# Transport Layer Security (TLS)
+## Transport Layer Security (TLS)
 #
 
+<% if @tls_protocol_min -%>
 TLSProtocolMin <%= @tls_protocol_min %>
+<% end -%>
+<% if @tls_cipher_suite-%>
 TLSCipherSuite <%= @tls_cipher_suite %>
-
+<% end -%>
+<% if @tls_ca_certificate_path -%>
+TLSCACertificatePath <%= @tls_ca_certificate_path %>
+<% elsif @tls_ca_certificate_file -%>
 TLSCACertificateFile <%= @tls_ca_certificate_file %>
+<% end -%>
+<% if @tls_certificate_file -%>
 TLSCertificateFile <%= @tls_certificate_file %>
+<% end -%>
+<% if @tls_key_file -%>
 TLSCertificateKeyFile <%= @tls_key_file %>
-
+<% end -%>
 <% if @tls_dh_param_file -%>
 TLSDHParamFile <%= @tls_dh_param_file %>
 <% end -%>

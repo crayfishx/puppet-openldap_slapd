@@ -1,39 +1,48 @@
 define openldap_slapd::database (
   $acls = {},
-  $rootpw = undef,
-  $order  = '80',
-  $target = $::openldap_slapd::conf_file,
-  $acls = {},
-  $suffix = undef,
-  $rootdn = undef,
+  $add_content_acl = undef,
+  $backend = undef,
+  $checkpoint = undef,
+  $dbnosync = false,
   $directory = undef,
+  $envflags = undef,
+  $indexes = [],
+  $lastmod = undef,
+  $limits = undef,
+  $maxsize = undef,
+  $mirrormode = true,
   $mode = undef,
   $monitoring = undef,
-  $add_content_acl = undef,
-  $dbnosync = false,
-  $checkpoint = undef,
-  $maxsize = undef,
-  $indexes = [],
-  $syncrepl = {},
+  $order  = '80',
   $overlays = {},
-  $mirrormode = true,
-
-
+  $rootdn = undef,
+  $rootpw = undef,
+  $sizelimit = undef,
+  $suffix = undef,
+  $syncrepl = {},
+  $target = $::openldap_slapd::conf_file,
+  $timelimit = undef,
+  $uri = undef,
 ) {
 
-  ## If database is config we force a order of 70
-  $concat_order = $name ? {
-    'config'  => '70',
-    'monitor' => '99',
-    default   => $order,
+  if $directory {
+    file { $directory:
+      ensure  => 'directory',
+      owner   => 'ldap',
+      group   => 'ldap',
+      mode    => '0700',
+      require => Package['openldap-servers'],
+    } 
   }
 
+  # List databases alphabetically
   concat::fragment { "openldap::database::${name}":
     content => template('openldap_slapd/_database.erb'),
     target  => $target,
-    order   => "${concat_order}_0",
+    order   => "${order}_${name}_0",
   }
 
-  create_resources('openldap_slapd::acl', $acls, { "order" => "${concat_order}_9" })
+  # Append the database's name to order to get the acls under the correct db.
+  create_resources('openldap_slapd::acl', $acls, { "order" => "${order}_${name}_9" })
 }
 
