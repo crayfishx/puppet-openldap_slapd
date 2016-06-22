@@ -15,6 +15,7 @@ define openldap_slapd::database (
   $monitoring = undef,
   $order  = '80',
   $overlays = {},
+  $rebind_as_user = undef,
   $rootdn = undef,
   $rootpw = undef,
   $sizelimit = undef,

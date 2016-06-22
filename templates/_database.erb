@@ -34,10 +34,12 @@ database <%= @backend -%>
 <% end -%>
 <% unless @indexes.empty? %>
 # Indexes for <%= @name %>
-<% end %>
+<% end -%>
 <% @indexes.each do |i| -%>index <%= i %>
 <% end -%>
 <%if @limits -%>limits <%= @limits %>
+<% end -%>
+<%if @rebind_as_user and @backend == 'ldap' -%>rebind-as-user  <%= @rebind_as_user %>
 <% end -%>
 <% unless @overlays.empty? %>
 # Overlays for <%= @name %>
