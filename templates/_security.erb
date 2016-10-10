@@ -1,11 +1,10 @@
 ## Security requirements
 #
 
-password-hash <%= @password_hash %>
-<% if @password_salt_format -%>
-password-crypt-salt-format "<%= @password_salt_format %>"
+<% if @password_hash -%>password-hash <%= @password_hash %>
 <% end -%>
-
+<% if @password_salt_format -%>password-crypt-salt-format "<%= @password_salt_format %>"
+<% end -%>
 <% if @sec_require and ! @sec_require.empty? -%>
 <%- Array(@sec_require).each do |sec_require| -%>
 require <%= sec_require %>
@@ -22,8 +21,8 @@ allow <%= sec_allow %>
 localSSF <%= @local_ssf %>
 <% end -%>
 
-# minimum required SSF value (security strength factor)
-security <%= @security %>
+<% if @security -%>security <%= @security %>
+<% end -%>
 <% if @sec_disallow and ! @sec_disallow.empty? -%>
 <%- Array(@sec_disallow).each do |sec_disallow| -%>
 disallow <%= sec_disallow %>

@@ -1,3 +1,7 @@
+# Define: openldap_slapd::schema
+# ==============================
+#
+# Create list of schemas to include.
 define openldap_slapd::schema (
   $position   = 0,
   $files      = [],
