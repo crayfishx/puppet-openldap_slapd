@@ -1,3 +1,7 @@
+# Define: openldap_slapd::module
+# ==============================
+#
+# Create a list modules to load.
 define openldap_slapd::module (
   $modulename = $name,
   $order      = '10',

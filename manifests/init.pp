@@ -47,31 +47,30 @@ class openldap_slapd (
   $authz_regexp            = {},
   $conf_file               = $openldap_slapd::params::conf_file,
   $databases               = {},
-  $global_acls             = $openldap_slapd::params::global_acls,
-  $local_ssf               = $openldap_slapd::params::local_ssf,
+  $global_acls             = undef,
+  $local_ssf               = undef,
   $log_level               = $openldap_slapd::params::log_level,
   $modules                 = [],
-  $password_hash           = $openldap_slapd::params::password_hash,
-  $password_salt_format    = $openldap_slapd::params::password_salt_format,
+  $password_hash           = undef,
+  $password_salt_format    = undef,
   $pidfile                 = $openldap_slapd::params::pidfile,
-  $schema_dir              = $openldap_slapd::params::schema_dir,
   $schemas                 = {},
-  $sec_allow               = $openldap_slapd::params::sec_allow,
-  $sec_disallow            = $openldap_slapd::params::sec_disallow,
-  $sec_require             = $openldap_slapd::params::sec_require,
-  $security                = $openldap_slapd::params::security,
+  $sec_allow               = undef,
+  $sec_disallow            = undef,
+  $sec_require             = undef,
+  $security                = undef,
   $server_id               = $openldap_slapd::params::server_id,
   $sizelimit               = undef,
   $threads                 = $openldap_slapd::params::threads,
   $timelimit               = undef,
-  $tls_ca_certificate_file = $openldap_slapd::params::tls_ca_certificate_file,
+  $tls_ca_certificate_file = undef,
   $tls_ca_certificate_path = undef,
-  $tls_certificate_file    = $openldap_slapd::params::tls_certificate_file,
-  $tls_cipher_suite        = $openldap_slapd::params::tls_cipher_suite,
-  $tls_dh_param_file       = $openldap_slapd::params::tls_dh_param_file,
-  $tls_enabled             = $openldap_slapd::params::tls_enabled,
-  $tls_key_file            = $openldap_slapd::params::tls_key_file,
-  $tls_protocol_min        = $openldap_slapd::params::tls_protocol_min,
+  $tls_certificate_file    = undef,
+  $tls_cipher_suite        = undef,
+  $tls_dh_param_file       = undef,
+  $tls_enabled             = undef,
+  $tls_key_file            = undef,
+  $tls_protocol_min        = undef,
 ) inherits openldap_slapd::params {
 
   package { 'openldap-servers':
@@ -116,7 +115,7 @@ class openldap_slapd (
     content => template('openldap_slapd/_security.erb')
   }
 
-  if $tls_enabled == true {
+  if str2bool("$tls_enabled") {
     concat::fragment { 'openldap_slapd::tls':
       order   => '30',
       content => template('openldap_slapd/_tls.erb')
@@ -132,5 +131,4 @@ class openldap_slapd (
   if $global_acls {
     create_resources('openldap_slapd::acl', $global_acls)
   }
-  
 }

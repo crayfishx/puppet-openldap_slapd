@@ -1,3 +1,8 @@
+# Define: openldap_slapd::database
+# ================================
+#
+# Database
+# Create configuration block for one database
 define openldap_slapd::database (
   $acls = {},
   $add_content_acl = undef,
@@ -33,7 +38,7 @@ define openldap_slapd::database (
       group   => 'ldap',
       mode    => '0700',
       require => Package['openldap-servers'],
-    } 
+    }
   }
 
   # List databases alphabetically
@@ -44,6 +49,6 @@ define openldap_slapd::database (
   }
 
   # Append the database's name to order to get the acls under the correct db.
-  create_resources('openldap_slapd::acl', $acls, { "order" => "${order}_${name}_9" })
+  create_resources('openldap_slapd::acl', $acls, { 'order' => "${order}_${name}_9" })
 }
 
