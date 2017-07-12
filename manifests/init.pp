@@ -48,6 +48,7 @@ class openldap_slapd (
   $conf_file               = $openldap_slapd::params::conf_file,
   $databases               = {},
   $global_acls             = $openldap_slapd::params::global_acls,
+  $idletimeout             = $openldap_slapd::params::idletimeout,
   $local_ssf               = $openldap_slapd::params::local_ssf,
   $log_level               = $openldap_slapd::params::log_level,
   $modules                 = [],

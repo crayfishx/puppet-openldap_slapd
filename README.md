@@ -20,6 +20,7 @@ include openldap_slapd
 * `conf_file`: Configuration file location, default `/etc/openldap/slapd.conf`
 * `loglevel`: OpenLDAP loglevel, default `stats` 
 * `threads`: Maximum size of the primary thread pool, default 16
+* `idletimeout`: Maximum time of seconds to leave an idle connection open, default 600.
 
 #### Custom configuration settings
 * `global_acls`: A hash containing global ACL's, see `params.pp` for default settings
