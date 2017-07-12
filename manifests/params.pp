@@ -12,6 +12,7 @@ class openldap_slapd::params {
   $argsfile    = '/var/run/openldap/slapd.args'
   $log_level   = 'stats'
   $tls_enabled = true
+  $idletimeout = '600'
 
   ## TLS options
   #$tls_protocol_min        = '3.1'
